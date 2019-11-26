@@ -1,13 +1,23 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <MyMenu :menulist="menulist"></MyMenu>
     </div>
     <router-view />
   </div>
 </template>
-
+<script>
+import MyMenu from "./components/MyMenu";
+import { mapState } from "vuex";
+export default {
+  components: {
+    MyMenu
+  },
+  computed: {
+    ...mapState("route", ["menulist"])
+  }
+};
+</script>
 <style lang="less">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -19,7 +29,9 @@
 
 #nav {
   padding: 30px;
-
+  width: 200px;
+  position: absolute;
+  left: 0px;
   a {
     font-weight: bold;
     color: #2c3e50;

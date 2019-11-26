@@ -3,21 +3,84 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
-
-const routes = [
+// 动态路由
+export const routerMap = [
   {
-    path: "/",
+    path: "/home",
     name: "home",
-    component: Home
+    component: Home,
+    meta: { title: '首页' },
+    children: [
+      {
+        path: "/home_index",
+        name: "home_index",
+        component: () => import("../views/HomeInex.vue"),
+        meta: { title: '首页1' },
+        children: [
+          {
+            path: "/form",
+            name: "form",
+            meta: { title: '首页1-1' },
+            component: () => import("../views/form.vue")
+          }
+        ]
+      },
+      {
+        path: "/home_index_1",
+        name: "home_index_1",
+        meta: { title: '首页2' },
+        component: () => import("../views/HomeInex1.vue")
+      }
+    ]
+  },
+
+  {
+    path: "/count-to",
+    name: "count_to",
+    meta: { title: '数到' },
+    component: () => import("../views/ContTo.vue")
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "/upload",
+    name: "upload",
+    meta: { title: '上传' },
+    component: () => import("../views/upload.vue")
+  },
+
+
+  {
+    path: "/store",
+    name: "store",
+    component: () => import("../views/store.vue"),
+    meta: { title: '仓库' },
+    // children: [
+    //   {
+    //     path: "/home_index",
+    //     name: "home_index",
+    //     meta: { title: '首页21' },
+    //     component: () => import("../views/HomeInex.vue")
+    //   },
+    //   {
+    //     path: "/home_index_1",
+    //     name: "home_index_1",
+    //     meta: { title: '首页22' },
+    //     component: () => import("../views/HomeInex1.vue")
+    //   }
+    // ]
+  }
+];
+// 默认大家都能访问的路由
+export const routes = [
+  {
+    path: "/",
+    name: "login",
+    component: () => import("../views/login.vue")
+  },
+
+  {
+    path: "*",
+    // name: "error",
+    component: () => import("../views/error_404.vue")
   }
 ];
 
